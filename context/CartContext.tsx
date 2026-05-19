@@ -28,6 +28,18 @@ type CartContextType = {
 
   decreaseQuantity: (name: string) => void;
 
+  clearCart: () => void;
+
+  cartCount: number;
+
+  subtotal: number;
+
+  shipping: number;
+
+  taxes: number;
+
+  total: number;
+
   isCartOpen: boolean;
 
   openCart: () => void;
@@ -46,6 +58,18 @@ const CartContext = createContext<CartContextType>({
 
   decreaseQuantity: () => {},
 
+  clearCart: () => {},
+
+  cartCount: 0,
+
+  subtotal: 0,
+
+  shipping: 0,
+
+  taxes: 0,
+
+  total: 0,
+
   isCartOpen: false,
 
   openCart: () => {},
@@ -58,36 +82,67 @@ export function CartProvider({
 }: {
   children: ReactNode;
 }) {
+
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] =
+    useState(false);
 
-  // LOAD CART FROM LOCAL STORAGE
+  // LOAD CART
   useEffect(() => {
+
     const savedCart =
       localStorage.getItem("voidwear-cart");
 
     if (savedCart) {
       setCartItems(JSON.parse(savedCart));
     }
+
   }, []);
 
-  // SAVE CART TO LOCAL STORAGE
+  // SAVE CART
   useEffect(() => {
+
     localStorage.setItem(
       "voidwear-cart",
       JSON.stringify(cartItems)
     );
+
   }, [cartItems]);
+
+  // CALCULATIONS
+  const subtotal = cartItems.reduce(
+    (acc, item) =>
+      acc +
+      Number(item.price.replace("$", "")) *
+        item.quantity,
+    0
+  );
+
+  const shipping =
+    cartItems.length > 0 ? 20 : 0;
+
+  const taxes = subtotal * 0.1;
+
+  const total =
+    subtotal + shipping + taxes;
+
+  const cartCount = cartItems.reduce(
+    (acc, item) => acc + item.quantity,
+    0
+  );
 
   // ADD TO CART
   const addToCart = (product: CartItem) => {
+
     setCartItems((prev) => {
+
       const existingItem = prev.find(
         (item) => item.name === product.name
       );
 
       if (existingItem) {
+
         return prev.map((item) =>
           item.name === product.name
             ? {
@@ -114,15 +169,19 @@ export function CartProvider({
     );
   };
 
-  // REMOVE ITEM
+  // REMOVE
   const removeFromCart = (index: number) => {
+
     setCartItems((prev) =>
       prev.filter((_, i) => i !== index)
     );
+
+    toast.error("Item removed from cart");
   };
 
-  // INCREASE QUANTITY
+  // INCREASE
   const increaseQuantity = (name: string) => {
+
     setCartItems((prev) =>
       prev.map((item) =>
         item.name === name
@@ -135,8 +194,9 @@ export function CartProvider({
     );
   };
 
-  // DECREASE QUANTITY
+  // DECREASE
   const decreaseQuantity = (name: string) => {
+
     setCartItems((prev) =>
       prev
         .map((item) =>
@@ -151,12 +211,22 @@ export function CartProvider({
     );
   };
 
-  // OPEN CART
+  // CLEAR
+  const clearCart = () => {
+
+    setCartItems([]);
+
+    toast.success(
+      "Cart cleared successfully"
+    );
+  };
+
+  // OPEN
   const openCart = () => {
     setIsCartOpen(true);
   };
 
-  // CLOSE CART
+  // CLOSE
   const closeCart = () => {
     setIsCartOpen(false);
   };
@@ -173,6 +243,18 @@ export function CartProvider({
         increaseQuantity,
 
         decreaseQuantity,
+
+        clearCart,
+
+        cartCount,
+
+        subtotal,
+
+        shipping,
+
+        taxes,
+
+        total,
 
         isCartOpen,
 

@@ -1,12 +1,38 @@
 "use client";
 
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+
+import {
+  motion,
+  AnimatePresence,
+} from "framer-motion";
+
+import {
+  useState,
+} from "react";
+
+import {
+  Heart,
+  ShoppingBag,
+} from "lucide-react";
+
+import SearchOverlay from "@/components/SearchOverlay";
+
+import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 
 export default function Navbar() {
 
   const [open, setOpen] = useState(false);
+
+  const [searchOpen, setSearchOpen] =
+    useState(false);
+
+  const { openCart, cartCount } =
+    useCart();
+
+  const { wishlistCount } =
+    useWishlist();
 
   return (
     <>
@@ -60,20 +86,64 @@ export default function Navbar() {
               >
                 Contact
               </Link>
+
+              {/* SEARCH */}
+              <button
+                onClick={() =>
+                  setSearchOpen(true)
+                }
+                className="hover:text-white transition"
+              >
+                Search
+              </button>
             </div>
 
             {/* RIGHT SIDE */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
 
-              {/* CART */}
-              <button className="hidden md:block uppercase tracking-[0.3em] text-[10px] border border-white/10 px-4 py-2 rounded-full hover:bg-white hover:text-black transition duration-500">
-                Cart
+              {/* WISHLIST */}
+              <button className="relative w-11 h-11 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition duration-500">
+
+                <Heart size={16} />
+
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-white text-black text-[9px] flex items-center justify-center font-bold">
+                    {wishlistCount}
+                  </span>
+                )}
               </button>
 
-              {/* MOBILE MENU BUTTON */}
+              {/* CART */}
               <button
-                onClick={() => setOpen(!open)}
-                className="md:hidden flex flex-col gap-1"
+                onClick={openCart}
+                className="relative w-11 h-11 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition duration-500"
+              >
+
+                <ShoppingBag size={16} />
+
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-white text-black text-[9px] flex items-center justify-center font-bold">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+
+              {/* MOBILE SEARCH */}
+              <button
+                onClick={() =>
+                  setSearchOpen(true)
+                }
+                className="md:hidden uppercase tracking-[0.3em] text-[10px]"
+              >
+                Search
+              </button>
+
+              {/* MOBILE MENU */}
+              <button
+                onClick={() =>
+                  setOpen(!open)
+                }
+                className="md:hidden flex flex-col gap-1 ml-2"
               >
                 <span className="w-5 h-[1px] bg-white" />
                 <span className="w-5 h-[1px] bg-white" />
@@ -125,7 +195,9 @@ export default function Navbar() {
 
               <Link
                 href="/shop"
-                onClick={() => setOpen(false)}
+                onClick={() =>
+                  setOpen(false)
+                }
                 className="text-4xl tracking-[-0.05em] font-black"
               >
                 SHOP
@@ -133,7 +205,9 @@ export default function Navbar() {
 
               <Link
                 href="/about"
-                onClick={() => setOpen(false)}
+                onClick={() =>
+                  setOpen(false)
+                }
                 className="text-4xl tracking-[-0.05em] font-black"
               >
                 ABOUT
@@ -141,7 +215,9 @@ export default function Navbar() {
 
               <Link
                 href="/contact"
-                onClick={() => setOpen(false)}
+                onClick={() =>
+                  setOpen(false)
+                }
                 className="text-4xl tracking-[-0.05em] font-black"
               >
                 CONTACT
@@ -150,6 +226,14 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* SEARCH OVERLAY */}
+      <SearchOverlay
+        open={searchOpen}
+        onClose={() =>
+          setSearchOpen(false)
+        }
+      />
     </>
   );
 }

@@ -1,22 +1,30 @@
 import "./globals.css";
+
 import type { Metadata } from "next";
 
 import { Inter } from "next/font/google";
 
 import { CartProvider } from "@/context/CartContext";
+import { WishlistProvider } from "@/context/WishlistContext";
 
 import CartDrawer from "@/components/CartDrawer";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
 import PageLoader from "@/components/PageLoader";
 import ScrollProgress from "@/components/ScrollProgress";
+import PageTransition from "@/components/PageTransition";
+import RouteLoader from "@/components/RouteLoader";
+
 import { Toaster } from "sonner";
+
 const inter = Inter({
   subsets: ["latin"],
 });
+
 export const metadata: Metadata = {
   title: "VOIDWEAR",
-  description: "Luxury cinematic streetwear experience",
+  description:
+    "Cinematic luxury streetwear ecommerce experience.",
 };
 
 export default function RootLayout({
@@ -24,36 +32,50 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-black text-white overflow-x-hidden`}>
 
-        {/* PAGE LOADER */}
-        <PageLoader />
-<ScrollProgress />
-        <CartProvider>
+      <body
+        className={`${inter.className} overflow-x-hidden bg-black text-white`}
+      >
 
-          {/* SMOOTH SCROLL */}
-          <SmoothScroll />
+        <WishlistProvider>
 
-          {/* CUSTOM CURSOR */}
-          <CustomCursor />
+          <CartProvider>
 
-          {/* TOASTS */}
-          <Toaster
-            richColors
-            position="top-right"
-          />
+            {/* LOADERS */}
+            <PageLoader />
 
-          {/* WEBSITE */}
-          {children}
+            <RouteLoader />
 
-          {/* CART DRAWER */}
-          <CartDrawer />
+            {/* GLOBAL EFFECTS */}
+            <ScrollProgress />
 
-        </CartProvider>
+            <SmoothScroll />
+
+            <CustomCursor />
+
+            {/* CART */}
+            <CartDrawer />
+
+            {/* PAGE TRANSITIONS */}
+            <PageTransition>
+              {children}
+            </PageTransition>
+
+            {/* TOASTS */}
+            <Toaster
+              position="top-center"
+              richColors
+            />
+
+          </CartProvider>
+
+        </WishlistProvider>
 
       </body>
+
     </html>
   );
 }
