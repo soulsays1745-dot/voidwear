@@ -1,10 +1,30 @@
 "use client";
 
-import { motion } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 
 export default function Home() {
+
+  const { scrollY } = useScroll();
+
+  const heroY = useTransform(
+    scrollY,
+    [0, 1000],
+    [0, 180]
+  );
+
+  const editorialY = useTransform(
+    scrollY,
+    [0, 2000],
+    [0, -120]
+  );
+
   const products = [
     {
       slug: "obsidian-tee",
@@ -47,9 +67,13 @@ export default function Home() {
 
         {/* BG IMAGE */}
         <motion.div
+          style={{
+            y: heroY,
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1523398002811-999ca8dec234?q=80&w=2000&auto=format&fit=crop')",
+          }}
           animate={{
             scale: [1, 1.06, 1],
-            y: [0, -20, 0],
           }}
           transition={{
             duration: 14,
@@ -57,10 +81,6 @@ export default function Home() {
             ease: "easeInOut",
           }}
           className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1523398002811-999ca8dec234?q=80&w=2000&auto=format&fit=crop')",
-          }}
         />
 
         {/* OVERLAY */}
@@ -143,7 +163,24 @@ export default function Home() {
       </section>
 
       {/* PRODUCTS */}
-      <section className="relative z-10 px-6 py-32 bg-black">
+      <motion.section
+        initial={{
+          opacity: 0,
+          y: 100,
+          filter: "blur(20px)",
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+        }}
+        transition={{
+          duration: 1.4,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        viewport={{ once: true }}
+        className="relative z-10 px-6 py-32 bg-black"
+      >
 
         {/* TOP */}
         <div className="flex items-end justify-between mb-12">
@@ -223,13 +260,18 @@ export default function Home() {
             </Link>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* EDITORIAL */}
       <section className="relative min-h-screen overflow-hidden flex items-center justify-center">
 
         {/* IMAGE */}
         <motion.div
+          style={{
+            y: editorialY,
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=2000&auto=format&fit=crop')",
+          }}
           animate={{
             scale: [1, 1.05, 1],
           }}
@@ -239,10 +281,6 @@ export default function Home() {
             ease: "easeInOut",
           }}
           className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=2000&auto=format&fit=crop')",
-          }}
         />
 
         {/* OVERLAY */}
