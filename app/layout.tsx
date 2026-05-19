@@ -9,7 +9,7 @@ import CartDrawer from "@/components/CartDrawer";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
 import PageLoader from "@/components/PageLoader";
-
+import ScrollProgress from "@/components/ScrollProgress";
 import { Toaster } from "sonner";
 const inter = Inter({
   subsets: ["latin"],
@@ -30,7 +30,7 @@ export default function RootLayout({
 
         {/* PAGE LOADER */}
         <PageLoader />
-
+<ScrollProgress />
         <CartProvider>
 
           {/* SMOOTH SCROLL */}

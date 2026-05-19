@@ -7,6 +7,7 @@ import {
 } from "framer-motion";
 
 import Navbar from "@/components/Navbar";
+import MagneticButton from "@/components/MagneticButton";
 import Link from "next/link";
 
 export default function Home() {
@@ -100,14 +101,17 @@ export default function Home() {
             <motion.h1
               initial={{
                 opacity: 0,
-                y: 40,
+                y: 120,
+                filter: "blur(12px)",
               }}
               animate={{
                 opacity: 1,
                 y: 0,
+                filter: "blur(0px)",
               }}
               transition={{
-                duration: 1,
+                duration: 1.6,
+                ease: [0.22, 1, 0.36, 1],
               }}
               className="text-[4.5rem] md:text-[8rem] leading-[0.9] tracking-[-0.08em] font-black"
             >
@@ -145,12 +149,12 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4 mt-10">
 
                 <Link href="/shop">
-                  <button className="w-full sm:w-auto border border-white/20 px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white hover:text-black transition duration-500">
+                  <button className="w-full sm:w-auto border border-white/20 px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white hover:text-black transition duration-500 rounded-full">
                     Shop Collection
                   </button>
                 </Link>
 
-                <button className="w-full sm:w-auto bg-white text-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-zinc-200 transition duration-500">
+                <button className="w-full sm:w-auto bg-white text-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-zinc-200 transition duration-500 rounded-full">
                   Explore World
                 </button>
               </div>
@@ -296,20 +300,37 @@ export default function Home() {
             EDITORIAL CAMPAIGN
           </p>
 
-          <h2 className="text-[4rem] md:text-[10rem] leading-[0.85] tracking-[-0.08em] font-black">
+          <motion.h2
+            initial={{
+              opacity: 0,
+              y: 100,
+              filter: "blur(10px)",
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+            }}
+            transition={{
+              duration: 1.4,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            viewport={{ once: true }}
+            className="text-[4rem] md:text-[10rem] leading-[0.85] tracking-[-0.08em] font-black"
+          >
             FUTURE
             <br />
             MEETS
             <br />
             MOTION
-          </h2>
+          </motion.h2>
 
           <p className="max-w-xl mx-auto mt-10 text-gray-300 text-sm md:text-lg leading-8">
             A cinematic exploration of futuristic silhouettes,
             monochrome fashion, and modern underground culture.
           </p>
 
-          <button className="mt-10 border border-white/20 px-10 py-5 uppercase tracking-[0.35em] text-[10px] hover:bg-white hover:text-black transition duration-500">
+          <button className="mt-10 border border-white/20 px-10 py-5 uppercase tracking-[0.35em] text-[10px] hover:bg-white hover:text-black transition duration-500 rounded-full">
             Explore Editorial
           </button>
         </div>
