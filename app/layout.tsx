@@ -2,15 +2,17 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 import { CartProvider } from "@/context/CartContext";
-import CartDrawer from "@/components/CartDrawer";
 
+import CartDrawer from "@/components/CartDrawer";
 import SmoothScroll from "@/components/SmoothScroll";
+import CustomCursor from "@/components/CustomCursor";
+import PageLoader from "@/components/PageLoader";
 
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "VOIDWEAR",
-  description: "Premium streetwear brand",
+  description: "Luxury cinematic streetwear experience",
 };
 
 export default function RootLayout({
@@ -20,13 +22,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-black text-white overflow-x-hidden">
+
+        {/* PAGE LOADER */}
+        <PageLoader />
+
         <CartProvider>
 
           {/* SMOOTH SCROLL */}
           <SmoothScroll />
 
-          {/* TOAST NOTIFICATIONS */}
+          {/* CUSTOM CURSOR */}
+          <CustomCursor />
+
+          {/* TOASTS */}
           <Toaster
             richColors
             position="top-right"
@@ -37,7 +46,9 @@ export default function RootLayout({
 
           {/* CART DRAWER */}
           <CartDrawer />
+
         </CartProvider>
+
       </body>
     </html>
   );

@@ -7,189 +7,238 @@ import Link from "next/link";
 export default function Home() {
   const products = [
     {
-      slug: "void-tee",
-      name: "VOID Tee",
-      price: "$49",
-      image:
-        "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1200&auto=format&fit=crop",
-    },
-
-    {
-      slug: "shadow-hoodie",
-      name: "Shadow Hoodie",
-      price: "$89",
-      image:
-        "https://images.unsplash.com/photo-1503341504253-dff4815485f1?q=80&w=1200&auto=format&fit=crop",
-    },
-
-    {
-      slug: "cargo-pants",
-      name: "Cargo Pants",
-      price: "$79",
+      slug: "obsidian-tee",
+      name: "Obsidian Tee",
+      price: "€49",
       image:
         "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1200&auto=format&fit=crop",
+    },
+
+    {
+      slug: "void-hoodie",
+      name: "Void Hoodie",
+      price: "€89",
+      image:
+        "https://images.unsplash.com/photo-1503341504253-dff4815485f1?q=80&w=1200&auto=format&fit=crop",
     },
   ];
 
   return (
-    <main className="min-h-screen bg-black text-white overflow-x-hidden">
-      
+    <main className="relative bg-black text-white overflow-x-hidden">
+
+      {/* ATMOSPHERIC GLOW */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+
+        <div className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-white/5 blur-[160px] rounded-full" />
+
+        <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-zinc-500/10 blur-[180px] rounded-full" />
+
+        <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 blur-[220px] rounded-full" />
+      </div>
+
+      {/* GRAIN OVERLAY */}
+      <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-[1] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
       {/* NAVBAR */}
       <Navbar />
 
-      {/* HERO SECTION */}
-      <section className="relative min-h-screen overflow-hidden bg-black flex items-center">
+      {/* HERO */}
+      <section className="relative min-h-screen overflow-hidden flex items-center">
 
-        {/* BACKGROUND IMAGE */}
-        <div
-          className="absolute inset-0 bg-cover bg-center scale-105"
+        {/* BG IMAGE */}
+        <motion.div
+          animate={{
+            scale: [1, 1.06, 1],
+            y: [0, -20, 0],
+          }}
+          transition={{
+            duration: 14,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=2000&auto=format&fit=crop')",
+              "url('https://images.unsplash.com/photo-1523398002811-999ca8dec234?q=80&w=2000&auto=format&fit=crop')",
           }}
         />
 
-        {/* DARK OVERLAY */}
-        <div className="absolute inset-0 bg-black/75" />
+        {/* OVERLAY */}
+        <div className="absolute inset-0 bg-black/65" />
 
-        {/* ATMOSPHERIC GLOW */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-white/10 blur-[200px] rounded-full" />
+        {/* CONTENT */}
+        <div className="relative z-10 w-full px-6 pt-44 md:pt-28 pb-20">
 
-        {/* HERO CONTENT */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.5 }}
-          className="relative z-10 w-full px-6 md:px-16 pt-32"
-        >
-          
-          {/* SMALL LABEL */}
-          <p className="uppercase tracking-[0.6em] text-gray-500 text-[10px] md:text-xs mb-10">
-            VOIDWEAR — FUTURISTIC STREET ESSENTIALS
-          </p>
+          <div className="max-w-sm">
 
-          {/* MASSIVE TYPOGRAPHY */}
-          <div className="leading-[0.85] tracking-[-0.08em]">
-            <h1 className="text-[6rem] md:text-[12rem] lg:text-[15rem] font-black text-white">
-              FUTURE
-            </h1>
+            {/* LABEL */}
+            <p className="uppercase tracking-[0.4em] text-[10px] text-gray-400 mb-8">
+              VOIDWEAR 2026
+            </p>
 
-            <h1 className="text-[6rem] md:text-[12rem] lg:text-[15rem] font-black text-white/15">
-              MOTION
-            </h1>
-          </div>
+            {/* HEADLINE */}
+            <motion.h1
+              initial={{
+                opacity: 0,
+                y: 40,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 1,
+              }}
+              className="text-[4.5rem] md:text-[8rem] leading-[0.9] tracking-[-0.08em] font-black"
+            >
+              BUILT
+              <br />
+              FOR
+              <br />
+              DARKNESS.
+            </motion.h1>
 
-          {/* BOTTOM INFO */}
-          <div className="mt-16 flex flex-col md:flex-row md:items-end md:justify-between gap-10">
-            
-            {/* DESCRIPTION */}
-            <div className="max-w-lg">
-              <p className="text-gray-300 text-base md:text-lg leading-relaxed">
-                VOIDWEAR blends cinematic visuals, futuristic silhouettes,
-                and modern underground culture into a premium fashion experience.
+            {/* SUBTEXT */}
+            <motion.div
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              transition={{
+                delay: 0.4,
+                duration: 1,
+              }}
+              className="mt-10"
+            >
+
+              <div className="w-12 h-[1px] bg-white/30 mb-6" />
+
+              <p className="uppercase tracking-[0.3em] text-[11px] text-gray-300 leading-7">
+                Cinematic Streetwear
+                <br />
+                For The Future.
               </p>
 
-              <Link href="/shop">
-                <button className="mt-8 border border-white/20 px-8 py-4 rounded-full uppercase tracking-[0.3em] text-xs hover:bg-white hover:text-black transition duration-500">
-                  Explore Collection
-                </button>
-              </Link>
-            </div>
+              {/* BUTTONS */}
+              <div className="flex flex-col sm:flex-row gap-4 mt-10">
 
-            {/* SIDE TEXT */}
-            <div className="text-gray-500 uppercase tracking-[0.4em] text-[10px] leading-6">
-              <p>Editorial Experience</p>
-              <p>Luxury Streetwear</p>
-              <p>Modern Fashion Culture</p>
-            </div>
+                <Link href="/shop">
+                  <button className="w-full sm:w-auto border border-white/20 px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white hover:text-black transition duration-500">
+                    Shop Collection
+                  </button>
+                </Link>
+
+                <button className="w-full sm:w-auto bg-white text-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-zinc-200 transition duration-500">
+                  Explore World
+                </button>
+              </div>
+            </motion.div>
           </div>
-        </motion.div>
+        </div>
 
         {/* BOTTOM GRADIENT */}
         <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black to-transparent" />
       </section>
 
-      {/* FEATURED PRODUCTS */}
-<motion.section
-  initial={{ opacity: 0, y: 80 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 1 }}
-  viewport={{ once: true }}
-  className="px-6 md:px-16 py-24 bg-black"
->
-  
-  <div className="flex items-end justify-between mb-16">
-    <div>
-      <p className="uppercase tracking-[0.4em] text-gray-500 text-xs mb-4">
-        Latest Collection
-      </p>
+      {/* PRODUCTS */}
+      <section className="relative z-10 px-6 py-32 bg-black">
 
-      <h2 className="text-5xl md:text-7xl font-black tracking-tight">
-        Featured
-      </h2>
-    </div>
+        {/* TOP */}
+        <div className="flex items-end justify-between mb-12">
 
-    <p className="hidden md:block text-gray-500 max-w-sm text-right">
-      Curated essentials inspired by futuristic fashion,
-      underground culture, and cinematic storytelling.
-    </p>
-  </div>
+          <div>
+            <p className="uppercase tracking-[0.4em] text-[10px] text-gray-500 mb-4">
+              Best Sellers
+            </p>
 
-  {/* PRODUCT GRID */}
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-    {products.map((product, index) => (
-      <Link
-        key={index}
-        href={`/shop/${product.slug}`}
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.7,
-            delay: index * 0.2,
-          }}
-          viewport={{ once: true }}
-          className="group cursor-pointer"
-        >
-          
-          {/* PRODUCT IMAGE */}
-          <div className="overflow-hidden rounded-[2rem] bg-zinc-900 border border-white/10">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-[550px] object-cover group-hover:scale-105 transition duration-700"
-            />
+            <h2 className="text-5xl md:text-7xl leading-none tracking-[-0.06em] font-black">
+              NEW
+              <br />
+              ARRIVALS
+            </h2>
           </div>
 
-          {/* PRODUCT INFO */}
-          <div className="flex items-center justify-between mt-6">
-            <div>
-              <h3 className="text-2xl font-semibold">
-                {product.name}
-              </h3>
+          <button className="uppercase tracking-[0.3em] text-[10px] text-gray-400 border-b border-white/20 pb-2">
+            View All
+          </button>
+        </div>
 
-              <p className="text-gray-500 mt-2">
-                {product.price}
-              </p>
-            </div>
+        {/* GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
 
-            <span className="uppercase tracking-[0.3em] text-xs text-gray-500">
-              View
-            </span>
-          </div>
-        </motion.div>
-      </Link>
-    ))}
-  </div>
-</motion.section>
+          {products.map((product, index) => (
+            <Link
+              key={index}
+              href={`/shop/${product.slug}`}
+            >
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: 60,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 1,
+                  delay: index * 0.2,
+                }}
+                viewport={{ once: true }}
+                className="group hover:-translate-y-4 transition duration-700"
+              >
 
-      {/* CINEMATIC BANNER */}
-      <section className="relative h-[70vh] overflow-hidden flex items-center justify-center">
+                {/* CARD */}
+                <div className="relative overflow-hidden rounded-[2rem] border border-white/10 hover:border-white/30 transition duration-700">
+
+                  {/* IMAGE */}
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-[500px] md:h-[700px] object-cover group-hover:scale-110 transition duration-[1800ms]"
+                  />
+
+                  {/* OVERLAY */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
+
+                  {/* INFO */}
+                  <div className="absolute bottom-0 left-0 p-8">
+
+                    <p className="uppercase tracking-[0.35em] text-[10px] text-gray-400 mb-3">
+                      VOIDWEAR
+                    </p>
+
+                    <h3 className="text-2xl md:text-4xl font-black leading-none tracking-[-0.04em]">
+                      {product.name}
+                    </h3>
+
+                    <p className="text-gray-300 mt-4 text-sm">
+                      {product.price}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* EDITORIAL */}
+      <section className="relative min-h-screen overflow-hidden flex items-center justify-center">
 
         {/* IMAGE */}
-        <div
-          className="absolute inset-0 bg-cover bg-center scale-110"
+        <motion.div
+          animate={{
+            scale: [1, 1.05, 1],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage:
               "url('https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=2000&auto=format&fit=crop')",
@@ -197,44 +246,90 @@ export default function Home() {
         />
 
         {/* OVERLAY */}
-        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-black/75" />
 
         {/* CONTENT */}
         <div className="relative z-10 text-center px-6">
-          <p className="uppercase tracking-[0.5em] text-gray-500 text-xs mb-6">
-            VOIDWEAR 2026
+
+          <p className="uppercase tracking-[0.5em] text-[10px] text-gray-400 mb-8">
+            EDITORIAL CAMPAIGN
           </p>
 
-          <h2 className="text-5xl md:text-8xl font-black leading-none tracking-[-0.06em]">
-            SHAPING
+          <h2 className="text-[4rem] md:text-[10rem] leading-[0.85] tracking-[-0.08em] font-black">
+            FUTURE
             <br />
-            THE FUTURE
+            MEETS
+            <br />
+            MOTION
           </h2>
+
+          <p className="max-w-xl mx-auto mt-10 text-gray-300 text-sm md:text-lg leading-8">
+            A cinematic exploration of futuristic silhouettes,
+            monochrome fashion, and modern underground culture.
+          </p>
+
+          <button className="mt-10 border border-white/20 px-10 py-5 uppercase tracking-[0.35em] text-[10px] hover:bg-white hover:text-black transition duration-500">
+            Explore Editorial
+          </button>
+        </div>
+
+        {/* GRADIENT */}
+        <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black to-transparent" />
+      </section>
+
+      {/* STICKY EXPERIENCE */}
+      <section className="relative bg-black">
+
+        <div className="h-[250vh] relative">
+
+          <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+
+            {/* BG */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-black" />
+
+            {/* GLOW */}
+            <div className="absolute w-[700px] h-[700px] bg-white/5 blur-[140px] rounded-full" />
+
+            {/* CONTENT */}
+            <div className="relative z-10 text-center px-6">
+
+              <p className="uppercase tracking-[0.5em] text-[10px] text-gray-500 mb-8">
+                VOIDWEAR EXPERIENCE
+              </p>
+
+              <h2 className="text-[4rem] md:text-[10rem] leading-[0.85] tracking-[-0.08em] font-black">
+                MOTION
+                <br />
+                CREATES
+                <br />
+                EMOTION
+              </h2>
+
+              <p className="max-w-xl mx-auto mt-10 text-gray-400 text-sm md:text-lg leading-8">
+                Every interaction is designed to feel immersive,
+                cinematic, and emotionally driven.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-white/10 px-6 md:px-16 py-16 bg-black">
-        
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          
-          <div>
-            <h2 className="text-4xl font-black tracking-tight">
-              VOIDWEAR
-            </h2>
+      <footer className="border-t border-white/10 px-6 py-20 bg-black">
 
-            <p className="text-gray-500 mt-4 max-w-md">
-              Cinematic streetwear inspired by modern fashion,
-              futuristic visuals, and underground culture.
-            </p>
-          </div>
+        <h2 className="text-3xl md:text-5xl tracking-[0.4em] font-light">
+          VOIDWEAR
+        </h2>
 
-          {/* SOCIALS */}
-          <div className="flex gap-8 uppercase tracking-[0.3em] text-xs text-gray-400">
-            <a href="#">Instagram</a>
-            <a href="#">TikTok</a>
-            <a href="#">Pinterest</a>
-          </div>
+        <p className="text-gray-500 mt-6 text-sm leading-7 max-w-sm">
+          Futuristic streetwear blending cinematic visuals,
+          premium silhouettes, and underground culture.
+        </p>
+
+        <div className="flex gap-8 mt-12 uppercase tracking-[0.3em] text-[10px] text-gray-400">
+          <a href="#">Instagram</a>
+          <a href="#">TikTok</a>
+          <a href="#">Pinterest</a>
         </div>
       </footer>
     </main>
