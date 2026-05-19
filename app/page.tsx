@@ -158,8 +158,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* BOTTOM GRADIENT */}
-        <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black to-transparent" />
+        {/* HERO BOTTOM GRADIENT */}
+        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-black via-black/90 to-transparent" />
       </section>
 
       {/* PRODUCTS */}
@@ -181,6 +181,9 @@ export default function Home() {
         viewport={{ once: true }}
         className="relative z-10 px-6 py-32 bg-black"
       >
+
+        {/* TOP FADE */}
+        <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-black/80 to-transparent pointer-events-none" />
 
         {/* TOP */}
         <div className="flex items-end justify-between mb-12">
@@ -311,8 +314,8 @@ export default function Home() {
           </button>
         </div>
 
-        {/* GRADIENT */}
-        <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black to-transparent" />
+        {/* EDITORIAL BOTTOM GRADIENT */}
+        <div className="absolute bottom-0 left-0 w-full h-72 bg-gradient-to-t from-black via-black/90 to-transparent" />
       </section>
 
       {/* STICKY EXPERIENCE */}
