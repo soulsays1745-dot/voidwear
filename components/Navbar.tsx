@@ -88,21 +88,24 @@ export default function Navbar() {
               </Link>
 
               {/* SEARCH */}
-              <button
-                onClick={() =>
-                  setSearchOpen(true)
-                }
-                className="hover:text-white transition"
-              >
-                Search
-              </button>
+<button
+  onClick={() =>
+    setSearchOpen(true)
+  }
+  className="hover:text-white transition uppercase tracking-[0.3em] text-[10px]"
+>
+  Search
+</button>
             </div>
 
             {/* RIGHT SIDE */}
             <div className="flex items-center gap-3">
 
               {/* WISHLIST */}
-              <button className="relative w-11 h-11 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition duration-500">
+              <Link
+                href="/wishlist"
+                className="relative w-11 h-11 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition duration-500"
+              >
 
                 <Heart size={16} />
 
@@ -111,7 +114,7 @@ export default function Navbar() {
                     {wishlistCount}
                   </span>
                 )}
-              </button>
+              </Link>
 
               {/* CART */}
               <button
@@ -129,14 +132,14 @@ export default function Navbar() {
               </button>
 
               {/* MOBILE SEARCH */}
-              <button
-                onClick={() =>
-                  setSearchOpen(true)
-                }
-                className="md:hidden uppercase tracking-[0.3em] text-[10px]"
-              >
-                Search
-              </button>
+<button
+  onClick={() =>
+    setSearchOpen(true)
+  }
+  className="md:hidden uppercase tracking-[0.3em] text-[10px]"
+>
+  Search
+</button>
 
               {/* MOBILE MENU */}
               <button
@@ -221,6 +224,16 @@ export default function Navbar() {
                 className="text-4xl tracking-[-0.05em] font-black"
               >
                 CONTACT
+              </Link>
+
+              <Link
+                href="/wishlist"
+                onClick={() =>
+                  setOpen(false)
+                }
+                className="text-4xl tracking-[-0.05em] font-black"
+              >
+                WISHLIST
               </Link>
             </motion.div>
           </motion.div>

@@ -1,30 +1,17 @@
-import "./globals.css";
-
 import type { Metadata } from "next";
 
-import { Inter } from "next/font/google";
+import "./globals.css";
+
+import SmoothScroll from "@/components/SmoothScroll";
+import PageLoader from "@/components/PageLoader";
+import CartDrawer from "@/components/CartDrawer";
 
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 
-import CartDrawer from "@/components/CartDrawer";
-import SmoothScroll from "@/components/SmoothScroll";
-import CustomCursor from "@/components/CustomCursor";
-import PageLoader from "@/components/PageLoader";
-import ScrollProgress from "@/components/ScrollProgress";
-import PageTransition from "@/components/PageTransition";
-import RouteLoader from "@/components/RouteLoader";
-
-import { Toaster } from "sonner";
-
-const inter = Inter({
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
   title: "VOIDWEAR",
-  description:
-    "Cinematic luxury streetwear ecommerce experience.",
+  description: "Cinematic futuristic streetwear experience.",
 };
 
 export default function RootLayout({
@@ -36,46 +23,29 @@ export default function RootLayout({
   return (
     <html lang="en">
 
-      <body
-        className={`${inter.className} overflow-x-hidden bg-black text-white`}
-      >
+      <body className="bg-black text-white overflow-x-hidden">
 
         <WishlistProvider>
 
           <CartProvider>
 
-            {/* LOADERS */}
+            {/* LOADER */}
             <PageLoader />
 
-            <RouteLoader />
-
-            {/* GLOBAL EFFECTS */}
-            <ScrollProgress />
-
+            {/* SMOOTH SCROLL */}
             <SmoothScroll />
 
-            <CustomCursor />
-
-            {/* CART */}
+            {/* CART DRAWER */}
             <CartDrawer />
 
-            {/* PAGE TRANSITIONS */}
-            <PageTransition>
-              {children}
-            </PageTransition>
-
-            {/* TOASTS */}
-            <Toaster
-              position="top-center"
-              richColors
-            />
+            {/* WEBSITE */}
+            {children}
 
           </CartProvider>
 
         </WishlistProvider>
 
       </body>
-
     </html>
   );
 }

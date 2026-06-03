@@ -6,6 +6,9 @@ import {
   useTransform,
 } from "framer-motion";
 
+import Navbar from "@/components/Navbar";
+import BackButton from "@/components/BackButton";
+
 export default function ContactPage() {
 
   const { scrollY } = useScroll();
@@ -13,27 +16,32 @@ export default function ContactPage() {
   const heroY = useTransform(
     scrollY,
     [0, 1000],
-    [0, 180]
+    [0, 150]
   );
 
   return (
     <main className="relative min-h-screen bg-black text-white overflow-x-hidden">
 
+      {/* NAVBAR */}
+      <Navbar />
+
+      {/* BACK BUTTON */}
+      <div className="relative z-20 px-6 md:px-16 pt-32">
+        <BackButton />
+      </div>
+
       {/* ATMOSPHERIC GLOW */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
 
-        <div className="absolute top-[10%] left-[15%] w-[500px] h-[500px] bg-white/5 blur-[160px] rounded-full" />
+        <div className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-white/5 blur-[160px] rounded-full" />
 
         <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-zinc-500/10 blur-[180px] rounded-full" />
       </div>
 
-      {/* GRAIN */}
-      <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-[1] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-
       {/* HERO */}
-      <section className="relative h-screen overflow-hidden flex items-center">
+      <section className="relative h-[70vh] overflow-hidden flex items-center">
 
-        {/* BG IMAGE */}
+        {/* BG */}
         <motion.div
           style={{
             y: heroY,
@@ -47,12 +55,12 @@ export default function ContactPage() {
         <div className="absolute inset-0 bg-black/75" />
 
         {/* CONTENT */}
-        <div className="relative z-10 px-6 md:px-16">
+        <div className="relative z-10 px-6 md:px-16 max-w-5xl">
 
           <motion.p
             initial={{
               opacity: 0,
-              y: 30,
+              y: 20,
             }}
             animate={{
               opacity: 1,
@@ -78,50 +86,36 @@ export default function ContactPage() {
               filter: "blur(0px)",
             }}
             transition={{
-              duration: 1.6,
+              duration: 1.5,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="text-[5rem] md:text-[10rem] leading-[0.85] tracking-[-0.08em] font-black"
+            className="text-[4rem] md:text-[9rem] leading-[0.85] tracking-[-0.08em] font-black"
           >
-            LET’S
+            LET'S
             <br />
-            CREATE
-            <br />
-            SOMETHING
+            CONNECT
           </motion.h1>
 
-          <motion.p
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            transition={{
-              delay: 0.4,
-              duration: 1,
-            }}
-            className="max-w-2xl mt-10 text-sm md:text-lg text-gray-300 leading-8"
-          >
+          <p className="mt-10 text-gray-300 max-w-2xl leading-8 text-sm md:text-lg">
             Reach out for collaborations, partnerships,
-            creative direction, or future VOIDWEAR projects.
-          </motion.p>
+            support, or anything related to VOIDWEAR.
+          </p>
         </div>
 
         {/* BOTTOM GRADIENT */}
-        <div className="absolute bottom-0 left-0 w-full h-72 bg-gradient-to-t from-black via-black/90 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-black via-black/90 to-transparent" />
       </section>
 
       {/* CONTACT SECTION */}
       <section className="relative z-10 px-6 md:px-16 py-32">
 
-        <div className="grid lg:grid-cols-2 gap-20 items-start">
+        <div className="grid md:grid-cols-2 gap-20">
 
-          {/* LEFT SIDE */}
+          {/* LEFT */}
           <motion.div
             initial={{
               opacity: 0,
-              y: 80,
+              y: 60,
             }}
             whileInView={{
               opacity: 1,
@@ -133,54 +127,52 @@ export default function ContactPage() {
             viewport={{ once: true }}
           >
 
-            <p className="uppercase tracking-[0.5em] text-[10px] text-gray-500 mb-8">
-              Contact Information
+            <p className="uppercase tracking-[0.4em] text-[10px] text-gray-500 mb-6">
+              GET IN TOUCH
             </p>
 
-            <h2 className="text-5xl md:text-7xl leading-[0.9] tracking-[-0.08em] font-black mb-10">
-              START
-              <br />
-              A
+            <h2 className="text-4xl md:text-7xl leading-[0.9] tracking-[-0.06em] font-black mb-10">
+              START A
               <br />
               CONVERSATION
             </h2>
 
-            <p className="text-gray-400 leading-8 text-lg max-w-xl mb-16">
-              Whether you’re interested in collaborations,
-              fashion campaigns, creative partnerships,
-              or future projects — let’s connect.
+            <p className="text-gray-400 leading-8 text-sm md:text-lg max-w-xl">
+              Whether you want to collaborate, ask a question,
+              or simply connect with the VOIDWEAR universe,
+              we’re always open to hearing from you.
             </p>
 
-            {/* INFO */}
-            <div className="space-y-10">
+            {/* CONTACT INFO */}
+            <div className="mt-14 space-y-8">
 
               <div>
-                <p className="uppercase tracking-[0.4em] text-[10px] text-gray-500 mb-3">
-                  Email
+                <p className="uppercase tracking-[0.3em] text-[10px] text-gray-500 mb-3">
+                  EMAIL
                 </p>
 
-                <p className="text-xl text-gray-200">
-                  hello@voidwear.com
+                <p className="text-lg text-gray-300">
+                  contact@voidwear.com
                 </p>
               </div>
 
               <div>
-                <p className="uppercase tracking-[0.4em] text-[10px] text-gray-500 mb-3">
-                  Instagram
+                <p className="uppercase tracking-[0.3em] text-[10px] text-gray-500 mb-3">
+                  INSTAGRAM
                 </p>
 
-                <p className="text-xl text-gray-200">
+                <p className="text-lg text-gray-300">
                   @voidwear
                 </p>
               </div>
 
               <div>
-                <p className="uppercase tracking-[0.4em] text-[10px] text-gray-500 mb-3">
-                  Location
+                <p className="uppercase tracking-[0.3em] text-[10px] text-gray-500 mb-3">
+                  LOCATION
                 </p>
 
-                <p className="text-xl text-gray-200">
-                  Global / Digital First
+                <p className="text-lg text-gray-300">
+                  Tokyo — Paris — New York
                 </p>
               </div>
             </div>
@@ -198,75 +190,60 @@ export default function ContactPage() {
             }}
             transition={{
               duration: 1,
-              delay: 0.2,
             }}
             viewport={{ once: true }}
-            className="border border-white/10 bg-white/[0.03] backdrop-blur-2xl rounded-[2rem] p-8 md:p-12"
+            className="border border-white/10 rounded-[2rem] p-8 md:p-12 bg-white/[0.03] backdrop-blur-2xl"
           >
 
-            <p className="uppercase tracking-[0.5em] text-[10px] text-gray-500 mb-10">
-              Send Message
-            </p>
-
-            <div className="space-y-8">
+            <form className="space-y-8">
 
               {/* NAME */}
               <div>
-                <label className="block uppercase tracking-[0.3em] text-[10px] text-gray-500 mb-4">
+                <label className="uppercase tracking-[0.3em] text-[10px] text-gray-500 block mb-4">
                   Name
                 </label>
 
                 <input
                   type="text"
                   placeholder="Your Name"
-                  className="w-full bg-transparent border-b border-white/10 pb-4 outline-none text-lg placeholder:text-gray-600 focus:border-white transition"
+                  className="w-full bg-transparent border border-white/10 rounded-full px-6 py-5 outline-none focus:border-white transition"
                 />
               </div>
 
               {/* EMAIL */}
               <div>
-                <label className="block uppercase tracking-[0.3em] text-[10px] text-gray-500 mb-4">
+                <label className="uppercase tracking-[0.3em] text-[10px] text-gray-500 block mb-4">
                   Email
                 </label>
 
                 <input
                   type="email"
-                  placeholder="your@email.com"
-                  className="w-full bg-transparent border-b border-white/10 pb-4 outline-none text-lg placeholder:text-gray-600 focus:border-white transition"
-                />
-              </div>
-
-              {/* SUBJECT */}
-              <div>
-                <label className="block uppercase tracking-[0.3em] text-[10px] text-gray-500 mb-4">
-                  Subject
-                </label>
-
-                <input
-                  type="text"
-                  placeholder="Project Subject"
-                  className="w-full bg-transparent border-b border-white/10 pb-4 outline-none text-lg placeholder:text-gray-600 focus:border-white transition"
+                  placeholder="Your Email"
+                  className="w-full bg-transparent border border-white/10 rounded-full px-6 py-5 outline-none focus:border-white transition"
                 />
               </div>
 
               {/* MESSAGE */}
               <div>
-                <label className="block uppercase tracking-[0.3em] text-[10px] text-gray-500 mb-4">
+                <label className="uppercase tracking-[0.3em] text-[10px] text-gray-500 block mb-4">
                   Message
                 </label>
 
                 <textarea
-                  rows={5}
-                  placeholder="Tell us about your project..."
-                  className="w-full bg-transparent border-b border-white/10 pb-4 outline-none text-lg placeholder:text-gray-600 focus:border-white transition resize-none"
+                  rows={6}
+                  placeholder="Write your message..."
+                  className="w-full bg-transparent border border-white/10 rounded-[2rem] px-6 py-5 outline-none focus:border-white transition resize-none"
                 />
               </div>
 
               {/* BUTTON */}
-              <button className="w-full bg-white text-black py-5 rounded-full uppercase tracking-[0.35em] text-[10px] hover:bg-zinc-200 transition duration-500 mt-6">
+              <button
+                type="submit"
+                className="w-full bg-white text-black py-5 rounded-full uppercase tracking-[0.35em] text-[10px] hover:bg-zinc-200 transition duration-500"
+              >
                 Send Message
               </button>
-            </div>
+            </form>
           </motion.div>
         </div>
       </section>

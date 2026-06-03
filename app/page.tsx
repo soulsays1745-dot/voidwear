@@ -7,7 +7,6 @@ import {
 } from "framer-motion";
 
 import Navbar from "@/components/Navbar";
-import MagneticButton from "@/components/MagneticButton";
 import Link from "next/link";
 
 export default function Home() {
@@ -18,12 +17,6 @@ export default function Home() {
     scrollY,
     [0, 1000],
     [0, 180]
-  );
-
-  const editorialY = useTransform(
-    scrollY,
-    [0, 2000],
-    [0, -120]
   );
 
   const products = [
@@ -57,8 +50,8 @@ export default function Home() {
         <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 blur-[220px] rounded-full" />
       </div>
 
-      {/* GRAIN OVERLAY */}
-      <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-[1] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      {/* GRAIN */}
+      <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
       {/* NAVBAR */}
       <Navbar />
@@ -85,12 +78,12 @@ export default function Home() {
         />
 
         {/* OVERLAY */}
-        <div className="absolute inset-0 bg-black/65" />
+        <div className="absolute inset-0 bg-black/65 pointer-events-none" />
 
         {/* CONTENT */}
-        <div className="relative z-10 w-full px-6 pt-44 md:pt-28 pb-20">
+        <div className="relative z-10 w-full px-6 pt-28 md:pt-20 pb-20">
 
-          <div className="max-w-sm">
+          <div className="max-w-md">
 
             {/* LABEL */}
             <p className="uppercase tracking-[0.4em] text-[10px] text-gray-400 mb-8">
@@ -113,7 +106,7 @@ export default function Home() {
                 duration: 1.6,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="text-[4.5rem] md:text-[8rem] leading-[0.9] tracking-[-0.08em] font-black"
+              className="text-[4.8rem] md:text-[8.5rem] leading-[0.9] tracking-[-0.08em] font-black"
             >
               BUILT
               <br />
@@ -134,7 +127,7 @@ export default function Home() {
                 delay: 0.4,
                 duration: 1,
               }}
-              className="mt-10"
+              className="mt-8"
             >
 
               <div className="w-12 h-[1px] bg-white/30 mb-6" />
@@ -146,7 +139,7 @@ export default function Home() {
               </p>
 
               {/* BUTTONS */}
-              <div className="flex flex-col sm:flex-row gap-4 mt-10">
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
 
                 <Link href="/shop">
                   <button className="w-full sm:w-auto border border-white/20 px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white hover:text-black transition duration-500 rounded-full">
@@ -154,40 +147,26 @@ export default function Home() {
                   </button>
                 </Link>
 
-                <button className="w-full sm:w-auto bg-white text-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-zinc-200 transition duration-500 rounded-full">
+                <a
+                  href="#products"
+                  className="w-full sm:w-auto bg-white text-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-zinc-200 transition duration-500 rounded-full inline-flex items-center justify-center"
+                >
                   Explore World
-                </button>
+                </a>
               </div>
             </motion.div>
           </div>
         </div>
 
-        {/* HERO BOTTOM GRADIENT */}
-        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-black via-black/90 to-transparent" />
+        {/* HERO GRADIENT */}
+        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-black via-black/90 to-transparent pointer-events-none" />
       </section>
 
       {/* PRODUCTS */}
-      <motion.section
-        initial={{
-          opacity: 0,
-          y: 100,
-          filter: "blur(20px)",
-        }}
-        whileInView={{
-          opacity: 1,
-          y: 0,
-          filter: "blur(0px)",
-        }}
-        transition={{
-          duration: 1.4,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        viewport={{ once: true }}
+      <section
+        id="products"
         className="relative z-10 px-6 py-32 bg-black"
       >
-
-        {/* TOP FADE */}
-        <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-black/80 to-transparent pointer-events-none" />
 
         {/* TOP */}
         <div className="flex items-end justify-between mb-12">
@@ -204,9 +183,12 @@ export default function Home() {
             </h2>
           </div>
 
-          <button className="uppercase tracking-[0.3em] text-[10px] text-gray-400 border-b border-white/20 pb-2">
+          <Link
+            href="/shop"
+            className="uppercase tracking-[0.3em] text-[10px] text-gray-400 border-b border-white/20 pb-2"
+          >
             View All
-          </button>
+          </Link>
         </div>
 
         {/* GRID */}
@@ -266,113 +248,6 @@ export default function Home() {
               </motion.div>
             </Link>
           ))}
-        </div>
-      </motion.section>
-
-      {/* EDITORIAL */}
-      <section className="relative min-h-screen overflow-hidden flex items-center justify-center">
-
-        {/* IMAGE */}
-        <motion.div
-          style={{
-            y: editorialY,
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=2000&auto=format&fit=crop')",
-          }}
-          animate={{
-            scale: [1, 1.05, 1],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute inset-0 bg-cover bg-center"
-        />
-
-        {/* OVERLAY */}
-        <div className="absolute inset-0 bg-black/75" />
-
-        {/* CONTENT */}
-        <div className="relative z-10 text-center px-6">
-
-          <p className="uppercase tracking-[0.5em] text-[10px] text-gray-400 mb-8">
-            EDITORIAL CAMPAIGN
-          </p>
-
-          <motion.h2
-            initial={{
-              opacity: 0,
-              y: 100,
-              filter: "blur(10px)",
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-              filter: "blur(0px)",
-            }}
-            transition={{
-              duration: 1.4,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            viewport={{ once: true }}
-            className="text-[4rem] md:text-[10rem] leading-[0.85] tracking-[-0.08em] font-black"
-          >
-            FUTURE
-            <br />
-            MEETS
-            <br />
-            MOTION
-          </motion.h2>
-
-          <p className="max-w-xl mx-auto mt-10 text-gray-300 text-sm md:text-lg leading-8">
-            A cinematic exploration of futuristic silhouettes,
-            monochrome fashion, and modern underground culture.
-          </p>
-
-          <button className="mt-10 border border-white/20 px-10 py-5 uppercase tracking-[0.35em] text-[10px] hover:bg-white hover:text-black transition duration-500 rounded-full">
-            Explore Editorial
-          </button>
-        </div>
-
-        {/* EDITORIAL BOTTOM GRADIENT */}
-        <div className="absolute bottom-0 left-0 w-full h-72 bg-gradient-to-t from-black via-black/90 to-transparent" />
-      </section>
-
-      {/* STICKY EXPERIENCE */}
-      <section className="relative bg-black">
-
-        <div className="h-[250vh] relative">
-
-          <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-
-            {/* BG */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-black" />
-
-            {/* GLOW */}
-            <div className="absolute w-[700px] h-[700px] bg-white/5 blur-[140px] rounded-full" />
-
-            {/* CONTENT */}
-            <div className="relative z-10 text-center px-6">
-
-              <p className="uppercase tracking-[0.5em] text-[10px] text-gray-500 mb-8">
-                VOIDWEAR EXPERIENCE
-              </p>
-
-              <h2 className="text-[4rem] md:text-[10rem] leading-[0.85] tracking-[-0.08em] font-black">
-                MOTION
-                <br />
-                CREATES
-                <br />
-                EMOTION
-              </h2>
-
-              <p className="max-w-xl mx-auto mt-10 text-gray-400 text-sm md:text-lg leading-8">
-                Every interaction is designed to feel immersive,
-                cinematic, and emotionally driven.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 

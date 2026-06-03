@@ -1,207 +1,133 @@
 "use client";
 
+import Link from "next/link";
+
 import {
   motion,
-  AnimatePresence,
-  useScroll,
-  useTransform,
 } from "framer-motion";
 
+import {
+  Heart,
+  ShoppingBag,
+} from "lucide-react";
+
+import {
+  use,
+  useState,
+} from "react";
+
 import Navbar from "@/components/Navbar";
+import BackButton from "@/components/BackButton";
 
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 
-import { useParams } from "next/navigation";
+const products = [
+  {
+    slug: "obsidian-tee",
+    name: "Obsidian Tee",
+    price: "€49",
+    image:
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1400&auto=format&fit=crop",
+    description:
+      "Minimal futuristic tee crafted with cinematic silhouettes and premium comfort.",
+  },
 
-import { useState } from "react";
+  {
+    slug: "void-hoodie",
+    name: "Void Hoodie",
+    price: "€89",
+    image:
+      "https://images.unsplash.com/photo-1503341504253-dff4815485f1?q=80&w=1400&auto=format&fit=crop",
+    description:
+      "Oversized monochrome hoodie inspired by underground culture and future aesthetics.",
+  },
 
-import { Heart } from "lucide-react";
-
-const products = {
-  "void-tee": {
-    name: "VOID Oversized Tee",
-    price: "$49",
-
-    images: [
+  {
+    slug: "shadow-jacket",
+    name: "Shadow Jacket",
+    price: "€129",
+    image:
       "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1400&auto=format&fit=crop",
-
-      "https://images.unsplash.com/photo-1503341504253-dff4815485f1?q=80&w=1400&auto=format&fit=crop",
-
-      "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1400&auto=format&fit=crop",
-    ],
-
     description:
-      "Premium oversized streetwear tee designed with luxury minimal aesthetics.",
+      "Technical outerwear engineered for cinematic layering and modern streetwear.",
   },
 
-  "shadow-hoodie": {
-    name: "Shadow Hoodie",
-    price: "$89",
-
-    images: [
-      "https://images.unsplash.com/photo-1503341504253-dff4815485f1?q=80&w=1400&auto=format&fit=crop",
-
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1400&auto=format&fit=crop",
-
+  {
+    slug: "future-pants",
+    name: "Future Pants",
+    price: "€79",
+    image:
       "https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1400&auto=format&fit=crop",
-    ],
-
     description:
-      "Heavyweight hoodie inspired by dark cinematic fashion culture.",
+      "Relaxed futuristic pants blending comfort, utility, and minimalist aesthetics.",
   },
+];
 
-  "cargo-pants": {
-    name: "Cargo Pants",
-    price: "$79",
+export default function ProductPage({
+  params,
+}: {
+  params: Promise<{
+    slug: string;
+  }>;
+}) {
 
-    images: [
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1400&auto=format&fit=crop",
+  const resolvedParams = use(params);
 
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1400&auto=format&fit=crop",
-
-      "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1400&auto=format&fit=crop",
-    ],
-
-    description:
-      "Relaxed fit cargo pants with modern oversized silhouettes.",
-  },
-
-  "dark-flame-tee": {
-    name: "Dark Flame Tee",
-    price: "$59",
-
-    images: [
-      "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1400&auto=format&fit=crop",
-
-      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1400&auto=format&fit=crop",
-
-      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1400&auto=format&fit=crop",
-    ],
-
-    description:
-      "Bold streetwear tee inspired by underground fashion culture.",
-  },
-
-  "urban-jacket": {
-    name: "Urban Jacket",
-    price: "$120",
-
-    images: [
-      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1400&auto=format&fit=crop",
-
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1400&auto=format&fit=crop",
-
-      "https://images.unsplash.com/photo-1503341504253-dff4815485f1?q=80&w=1400&auto=format&fit=crop",
-    ],
-
-    description:
-      "Premium layered jacket with oversized luxury streetwear fit.",
-  },
-
-  "midnight-fit": {
-    name: "Midnight Fit",
-    price: "$95",
-
-    images: [
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1400&auto=format&fit=crop",
-
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1400&auto=format&fit=crop",
-
-      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1400&auto=format&fit=crop",
-    ],
-
-    description:
-      "Minimal dark aesthetic outfit inspired by cinematic fashion styling.",
-  },
-};
-
-export default function ProductPage() {
+  const product = products.find(
+    (item) =>
+      item.slug === resolvedParams.slug
+  );
 
   const { addToCart } = useCart();
 
   const {
     addToWishlist,
-    removeFromWishlist,
-    isInWishlist,
   } = useWishlist();
 
-  const params = useParams();
-
-  const slug = params.slug as string;
-
-  const product =
-    products[slug as keyof typeof products];
-
-  const [selectedImage, setSelectedImage] =
-    useState(0);
-
-  const { scrollY } = useScroll();
-
-  const imageY = useTransform(
-    scrollY,
-    [0, 1000],
-    [0, 120]
-  );
+  const [selectedSize, setSelectedSize] =
+    useState("M");
 
   if (!product) {
+
     return (
-      <main className="min-h-screen bg-black text-white flex items-center justify-center">
-        Product not found.
+      <main className="min-h-screen bg-black text-white flex items-center justify-center px-6">
+
+        <div className="text-center">
+
+          <h1 className="text-5xl font-black tracking-[-0.06em] mb-6">
+            PRODUCT NOT FOUND
+          </h1>
+
+          <Link
+            href="/shop"
+            className="uppercase tracking-[0.35em] text-[10px] text-gray-400 hover:text-white transition"
+          >
+            Return To Shop
+          </Link>
+        </div>
       </main>
     );
   }
 
-  const wished =
-    isInWishlist(product.name);
-
   return (
     <main className="relative min-h-screen bg-black text-white overflow-x-hidden">
 
-      {/* ATMOSPHERIC GLOW */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-
-        <div className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-white/5 blur-[160px] rounded-full" />
-
-        <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-zinc-500/10 blur-[180px] rounded-full" />
-      </div>
-
-      {/* GRAIN */}
-      <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-[1] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-
+      {/* NAVBAR */}
       <Navbar />
 
-      <section className="relative z-10 px-6 md:px-16 pt-36 pb-24">
+      {/* BACK BUTTON */}
+      <div className="relative z-20 px-6 md:px-16 pt-32">
+        <BackButton />
+      </div>
 
-        <div className="grid lg:grid-cols-[0.12fr_0.88fr_1fr] gap-8 items-start">
+      {/* PRODUCT */}
+      <section className="relative z-10 px-6 md:px-16 py-20">
 
-          {/* THUMBNAILS */}
-          <div className="flex lg:flex-col gap-4 order-2 lg:order-1">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-            {product.images.map((image, index) => (
-              <button
-                key={index}
-                onClick={() =>
-                  setSelectedImage(index)
-                }
-                className={`overflow-hidden rounded-2xl border transition duration-500 ${
-                  selectedImage === index
-                    ? "border-white"
-                    : "border-white/10"
-                }`}
-              >
-                <img
-                  src={image}
-                  alt=""
-                  className="w-20 h-24 object-cover"
-                />
-              </button>
-            ))}
-          </div>
-
-          {/* MAIN IMAGE */}
+          {/* IMAGE */}
           <motion.div
-            className="relative order-1 lg:order-2"
             initial={{
               opacity: 0,
               y: 80,
@@ -213,174 +139,113 @@ export default function ProductPage() {
             transition={{
               duration: 1,
             }}
+            className="relative overflow-hidden rounded-[2rem] border border-white/10"
           >
 
-            {/* FLOATING WISHLIST BUTTON */}
-            <button
-              onClick={() => {
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-[700px] object-cover"
+            />
 
-                if (wished) {
-
-                  removeFromWishlist(
-                    product.name
-                  );
-
-                } else {
-
-                  addToWishlist({
-                    name: product.name,
-                    price: product.price,
-                    image:
-                      product.images[selectedImage],
-                  });
-                }
-              }}
-              className="absolute top-6 right-6 z-20 w-14 h-14 rounded-full backdrop-blur-2xl bg-black/40 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition duration-500"
-            >
-
-              <Heart
-                size={20}
-                fill={
-                  wished
-                    ? "white"
-                    : "transparent"
-                }
-              />
-            </button>
-
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-zinc-900">
-
-              <AnimatePresence mode="wait">
-
-                <motion.img
-                  key={selectedImage}
-                  initial={{
-                    opacity: 0,
-                    scale: 1.05,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    scale: 1,
-                  }}
-                  exit={{
-                    opacity: 0,
-                  }}
-                  transition={{
-                    duration: 0.6,
-                  }}
-                  style={{
-                    y: imageY,
-                  }}
-                  src={product.images[selectedImage]}
-                  alt={product.name}
-                  className="w-full h-[700px] md:h-[900px] object-cover"
-                />
-              </AnimatePresence>
-
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
           </motion.div>
 
-          {/* PRODUCT INFO */}
+          {/* INFO */}
           <motion.div
             initial={{
               opacity: 0,
-              y: 100,
+              y: 80,
             }}
             animate={{
               opacity: 1,
               y: 0,
             }}
             transition={{
-              duration: 1.2,
+              duration: 1,
+              delay: 0.2,
             }}
-            className="lg:sticky lg:top-32 order-3"
           >
 
-            <p className="uppercase tracking-[0.5em] text-[10px] text-gray-400 mb-8">
-              VOIDWEAR COLLECTION
+            <p className="uppercase tracking-[0.4em] text-[10px] text-gray-500 mb-6">
+              VOIDWEAR PRODUCT
             </p>
 
-            <h1 className="text-[4rem] md:text-[7rem] leading-[0.9] tracking-[-0.08em] font-black">
+            <h1 className="text-5xl md:text-8xl leading-[0.9] tracking-[-0.08em] font-black">
               {product.name}
             </h1>
 
-            <p className="text-2xl text-gray-300 mt-8">
+            <p className="text-3xl text-gray-300 mt-8">
               {product.price}
             </p>
 
-            <p className="text-gray-400 leading-8 text-sm md:text-lg mt-10 max-w-xl">
+            <p className="mt-10 text-gray-400 leading-8 text-sm md:text-lg max-w-xl">
               {product.description}
             </p>
 
-            {/* DIVIDER */}
-            <div className="w-full h-[1px] bg-white/10 my-12" />
+            {/* SIZE */}
+            <div className="mt-14">
 
-            {/* SIZES */}
-            <p className="uppercase tracking-[0.4em] text-[10px] text-gray-500 mb-6">
-              Select Size
-            </p>
+              <p className="uppercase tracking-[0.35em] text-[10px] text-gray-500 mb-6">
+                Select Size
+              </p>
 
-            <div className="flex flex-wrap gap-4 mb-12">
+              <div className="flex flex-wrap gap-4">
 
-              {["S", "M", "L", "XL"].map((size) => (
-                <button
-                  key={size}
-                  className="border border-white/10 backdrop-blur-xl bg-white/[0.03] px-8 py-4 rounded-full hover:bg-white hover:text-black transition duration-500 uppercase tracking-[0.3em] text-[10px]"
-                >
-                  {size}
-                </button>
-              ))}
+                {["S", "M", "L", "XL"].map((size) => (
+
+                  <button
+                    key={size}
+                    onClick={() =>
+                      setSelectedSize(size)
+                    }
+                    className={`w-16 h-16 rounded-full border transition duration-500 ${
+                      selectedSize === size
+                        ? "bg-white text-black border-white"
+                        : "border-white/10 hover:bg-white hover:text-black"
+                    }`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* BUTTON */}
-            <button
-              onClick={() =>
-                addToCart({
-                  name: product.name,
-                  price: product.price,
-                  image:
-                    product.images[selectedImage],
-                  quantity: 1,
-                })
-              }
-              className="w-full md:w-auto bg-white text-black px-12 py-5 rounded-full uppercase tracking-[0.35em] text-[10px] hover:bg-zinc-200 transition duration-500"
-            >
-              Add To Cart
-            </button>
+            {/* ACTIONS */}
+            <div className="flex flex-wrap gap-4 mt-14">
 
-            {/* EXTRA INFO */}
-            <div className="mt-16 space-y-8">
+              <button
+                onClick={() =>
+                  addToCart({
+                    name: `${product.name} (${selectedSize})`,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1,
+                  })
+                }
+                className="flex items-center gap-3 bg-white text-black px-10 py-5 rounded-full uppercase tracking-[0.35em] text-[10px] hover:bg-zinc-200 transition duration-500"
+              >
 
-              <div>
-                <p className="uppercase tracking-[0.4em] text-[10px] text-gray-500 mb-3">
-                  Material
-                </p>
+                <ShoppingBag size={16} />
 
-                <p className="text-gray-300">
-                  Premium heavyweight cotton blend.
-                </p>
-              </div>
+                Add To Cart
+              </button>
 
-              <div>
-                <p className="uppercase tracking-[0.4em] text-[10px] text-gray-500 mb-3">
-                  Fit
-                </p>
+              <button
+                onClick={() =>
+                  addToWishlist({
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                  })
+                }
+                className="flex items-center gap-3 border border-white/10 px-10 py-5 rounded-full uppercase tracking-[0.35em] text-[10px] hover:bg-white hover:text-black transition duration-500"
+              >
 
-                <p className="text-gray-300">
-                  Oversized cinematic silhouette.
-                </p>
-              </div>
+                <Heart size={16} />
 
-              <div>
-                <p className="uppercase tracking-[0.4em] text-[10px] text-gray-500 mb-3">
-                  Shipping
-                </p>
-
-                <p className="text-gray-300">
-                  Worldwide shipping available.
-                </p>
-              </div>
+                Wishlist
+              </button>
             </div>
           </motion.div>
         </div>

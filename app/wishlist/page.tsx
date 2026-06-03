@@ -14,6 +14,9 @@ import {
   Trash2,
 } from "lucide-react";
 
+import Navbar from "@/components/Navbar";
+import BackButton from "@/components/BackButton";
+
 import { useWishlist } from "@/context/WishlistContext";
 import { useCart } from "@/context/CartContext";
 
@@ -37,6 +40,14 @@ export default function WishlistPage() {
 
   return (
     <main className="relative min-h-screen bg-black text-white overflow-x-hidden">
+
+      {/* NAVBAR */}
+      <Navbar />
+
+      {/* BACK BUTTON */}
+      <div className="relative z-20 px-6 md:px-16 pt-32">
+        <BackButton />
+      </div>
 
       {/* ATMOSPHERIC GLOW */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
