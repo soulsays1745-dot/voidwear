@@ -1,24 +1,11 @@
 "use client";
 
-import {
-  motion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
-
+import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
+import CollectionHero from "@/components/CollectionHero";
 import Link from "next/link";
 
 export default function Home() {
-
-  const { scrollY } = useScroll();
-
-  const heroY = useTransform(
-    scrollY,
-    [0, 1000],
-    [0, 180]
-  );
-
   const products = [
     {
       slug: "obsidian-tee",
@@ -56,111 +43,8 @@ export default function Home() {
       {/* NAVBAR */}
       <Navbar />
 
-      {/* HERO */}
-      <section className="relative min-h-screen overflow-hidden flex items-center">
-
-        {/* BG IMAGE */}
-        <motion.div
-          style={{
-            y: heroY,
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1523398002811-999ca8dec234?q=80&w=2000&auto=format&fit=crop')",
-          }}
-          animate={{
-            scale: [1, 1.06, 1],
-          }}
-          transition={{
-            duration: 14,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute inset-0 bg-cover bg-center"
-        />
-
-        {/* OVERLAY */}
-        <div className="absolute inset-0 bg-black/65 pointer-events-none" />
-
-        {/* CONTENT */}
-        <div className="relative z-10 w-full px-6 pt-28 md:pt-20 pb-20">
-
-          <div className="max-w-md">
-
-            {/* LABEL */}
-            <p className="uppercase tracking-[0.4em] text-[10px] text-gray-400 mb-8">
-              VOIDWEAR 2026
-            </p>
-
-            {/* HEADLINE */}
-            <motion.h1
-              initial={{
-                opacity: 0,
-                y: 120,
-                filter: "blur(12px)",
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                filter: "blur(0px)",
-              }}
-              transition={{
-                duration: 1.6,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="text-[4.8rem] md:text-[8.5rem] leading-[0.9] tracking-[-0.08em] font-black"
-            >
-              BUILT
-              <br />
-              FOR
-              <br />
-              DARKNESS.
-            </motion.h1>
-
-            {/* SUBTEXT */}
-            <motion.div
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              transition={{
-                delay: 0.4,
-                duration: 1,
-              }}
-              className="mt-8"
-            >
-
-              <div className="w-12 h-[1px] bg-white/30 mb-6" />
-
-              <p className="uppercase tracking-[0.3em] text-[11px] text-gray-300 leading-7">
-                Cinematic Streetwear
-                <br />
-                For The Future.
-              </p>
-
-              {/* BUTTONS */}
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
-
-                <Link href="/shop">
-                  <button className="w-full sm:w-auto border border-white/20 px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-white hover:text-black transition duration-500 rounded-full">
-                    Shop Collection
-                  </button>
-                </Link>
-
-                <a
-                  href="#products"
-                  className="w-full sm:w-auto bg-white text-black px-8 py-4 uppercase tracking-[0.3em] text-[10px] hover:bg-zinc-200 transition duration-500 rounded-full inline-flex items-center justify-center"
-                >
-                  Explore World
-                </a>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* HERO GRADIENT */}
-        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-black via-black/90 to-transparent pointer-events-none" />
-      </section>
+      {/* NEW HERO */}
+      <CollectionHero />
 
       {/* PRODUCTS */}
       <section
@@ -168,7 +52,6 @@ export default function Home() {
         className="relative z-10 px-6 py-32 bg-black"
       >
 
-        {/* TOP */}
         <div className="flex items-end justify-between mb-12">
 
           <div>
@@ -191,7 +74,6 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
 
           {products.map((product, index) => (
@@ -216,20 +98,16 @@ export default function Home() {
                 className="group hover:-translate-y-4 transition duration-700"
               >
 
-                {/* CARD */}
                 <div className="relative overflow-hidden rounded-[2rem] border border-white/10 hover:border-white/30 transition duration-700">
 
-                  {/* IMAGE */}
                   <img
                     src={product.image}
                     alt={product.name}
                     className="w-full h-[500px] md:h-[700px] object-cover group-hover:scale-110 transition duration-[1800ms]"
                   />
 
-                  {/* OVERLAY */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
 
-                  {/* INFO */}
                   <div className="absolute bottom-0 left-0 p-8">
 
                     <p className="uppercase tracking-[0.35em] text-[10px] text-gray-400 mb-3">
@@ -243,6 +121,7 @@ export default function Home() {
                     <p className="text-gray-300 mt-4 text-sm">
                       {product.price}
                     </p>
+
                   </div>
                 </div>
               </motion.div>
@@ -268,6 +147,7 @@ export default function Home() {
           <a href="#">TikTok</a>
           <a href="#">Pinterest</a>
         </div>
+
       </footer>
     </main>
   );
