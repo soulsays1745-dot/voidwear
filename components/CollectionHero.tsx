@@ -12,7 +12,6 @@ const collections = [
     front: "/collections/spider-ink-front.png",
     back: "/collections/spider-ink-back.png",
   },
-
   {
     id: "02",
     title: "SPIDER CODE",
@@ -20,7 +19,6 @@ const collections = [
     front: "/collections/spider-code-front.png",
     back: "/collections/spider-code-back.png",
   },
-
   {
     id: "03",
     title: "INSTINCT MODE",
@@ -31,179 +29,160 @@ const collections = [
 ];
 
 export default function CollectionHero() {
-  const [active, setActive] = useState(0);
-  const [hovered, setHovered] = useState(false);
+  const [collectionIndex, setCollectionIndex] = useState(0);
+  const [showBack, setShowBack] = useState(false);
+
+  const current = collections[collectionIndex];
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setActive((prev) =>
-        prev === collections.length - 1 ? 0 : prev + 1
-      );
-    }, 5000);
+    const flipTimer = setInterval(() => {
+      setShowBack((prev) => !prev);
+    }, 3500);
 
-    return () => clearInterval(timer);
+    return () => clearInterval(flipTimer);
   }, []);
 
-  const current = collections[active];
+  useEffect(() => {
+    const collectionTimer = setInterval(() => {
+      setCollectionIndex((prev) =>
+        prev === collections.length - 1 ? 0 : prev + 1
+      );
+    }, 7000);
+
+    return () => clearInterval(collectionTimer);
+  }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section className="relative min-h-screen bg-black overflow-hidden pt-40 md:pt-48">
 
       {/* BACKGROUND */}
       <div className="absolute inset-0 bg-black" />
 
       {/* GLOW */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_70%)]" />
+      <div className="absolute inset-0 overflow-hidden">
+
+        <div className="absolute left-1/2 top-[45%] -translate-x-1/2 w-[900px] h-[900px] rounded-full bg-white/[0.04] blur-[180px]" />
+
+        <div className="absolute left-1/2 top-[45%] -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-white/[0.05] blur-[100px]" />
+
+      </div>
 
       {/* CONTENT */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 pt-32">
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
 
-        <div className="grid lg:grid-cols-2 gap-6 items-center">
+        {/* TOP LABEL */}
+        <motion.div
+          key={current.id}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center"
+        >
+          <p className="uppercase tracking-[0.8em] text-[10px] text-gray-500">
+            VOIDWEAR VOL. 01
+          </p>
+        </motion.div>
 
-          {/* LEFT */}
-          <div>
+        {/* TITLE */}
+        <AnimatePresence mode="wait">
 
-            <motion.p
-              key={current.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="uppercase tracking-[0.5em] text-[10px] text-gray-500 mb-6"
-            >
-              {current.id} / 03
-            </motion.p>
-
-            <AnimatePresence mode="wait">
-
-              <motion.div
-                key={current.title}
-                initial={{
-                  opacity: 0,
-                  y: 50,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  y: -50,
-                }}
-                transition={{
-                  duration: 0.6,
-                }}
-              >
-
-                <h1 className="text-6xl md:text-[8rem] leading-[0.85] tracking-[-0.08em] font-black">
-                  {current.title}
-                </h1>
-
-                <p className="mt-8 text-gray-400 uppercase tracking-[0.25em] text-sm leading-8 max-w-md">
-                  {current.subtitle}
-                </p>
-
-              </motion.div>
-
-            </AnimatePresence>
-
-            <div className="flex gap-4 mt-10">
-
-              <Link
-                href="/shop"
-                className="bg-white text-black px-8 py-4 rounded-full uppercase tracking-[0.3em] text-[10px] hover:bg-zinc-200 transition"
-              >
-                Explore Collection
-              </Link>
-
-            </div>
-
-          </div>
-
-          {/* RIGHT */}
-          <div
-            onMouseEnter={() =>
-              setHovered(true)
-            }
-            onMouseLeave={() =>
-              setHovered(false)
-            }
-            className="relative flex justify-center"
+          <motion.div
+            key={current.title}
+            initial={{
+              opacity: 0,
+              y: 30,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              y: -30,
+            }}
+            transition={{
+              duration: 0.5,
+            }}
+            className="text-center mt-8"
           >
 
-            {/* SPOTLIGHT */}
-            <div className="absolute w-[700px] h-[700px] rounded-full bg-white/5 blur-[150px]" />
+            <h1 className="text-5xl md:text-[6rem] lg:text-[7rem] font-black tracking-[-0.08em] leading-[0.9]">
+              {current.title}
+            </h1>
 
-            <AnimatePresence mode="wait">
+            <p className="mt-6 uppercase tracking-[0.35em] text-[11px] text-gray-400">
+              {current.subtitle}
+            </p>
+
+          </motion.div>
+
+        </AnimatePresence>
+
+        {/* SHIRT */}
+        <div className="relative flex justify-center mt-16">
+
+          <AnimatePresence mode="wait">
+
+            <motion.div
+              key={`${collectionIndex}-${showBack}`}
+              initial={{
+                rotateY: -90,
+                opacity: 0,
+              }}
+              animate={{
+                rotateY: 0,
+                opacity: 1,
+              }}
+              exit={{
+                rotateY: 90,
+                opacity: 0,
+              }}
+              transition={{
+                duration: 0.8,
+              }}
+              style={{
+                transformStyle: "preserve-3d",
+              }}
+            >
 
               <motion.img
-                key={`${active}-${hovered}`}
-                src={
-                  hovered
-                    ? current.front
-                    : current.back
-                }
+                src={showBack ? current.back : current.front}
                 alt={current.title}
-                initial={{
-                  opacity: 0,
-                  scale: 0.8,
-                  rotate: -10,
-                }}
                 animate={{
-                  opacity: 1,
-                  scale: 1,
-                  rotate: 0,
-                  y: [0, -15, 0],
-                }}
-                exit={{
-                  opacity: 0,
-                  scale: 0.8,
-                  rotate: 10,
+                  y: [0, -18, 0],
+                  rotateZ: [0, 1, 0, -1, 0],
                 }}
                 transition={{
-                  duration: 6,
+                  duration: 7,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="w-full max-w-[850px] drop-shadow-[0_0_120px_rgba(255,255,255,0.08)]"
+                className="w-full max-w-[650px] md:max-w-[750px] drop-shadow-[0_0_120px_rgba(255,255,255,0.08)]"
               />
 
-            </AnimatePresence>
+            </motion.div>
 
-          </div>
+          </AnimatePresence>
 
         </div>
 
-        {/* COLLECTION SELECTOR */}
-        <div className="flex flex-wrap gap-4 mt-20">
+        {/* COUNTER */}
+        <div className="text-center mt-8">
 
-          {collections.map((item, index) => (
-
-            <button
-              key={item.id}
-              onClick={() =>
-                setActive(index)
-              }
-              className={`px-6 py-4 rounded-full border uppercase tracking-[0.3em] text-[10px] transition ${
-                active === index
-                  ? "bg-white text-black border-white"
-                  : "border-white/10 text-gray-400 hover:border-white/30"
-              }`}
-            >
-              {item.id} {item.title}
-            </button>
-
-          ))}
+          <p className="uppercase tracking-[0.6em] text-[10px] text-gray-500">
+            {current.id} / 03
+          </p>
 
         </div>
 
         {/* PROGRESS BAR */}
-        <div className="mt-8 w-full max-w-md h-[2px] bg-white/10 overflow-hidden rounded-full">
+        <div className="w-[280px] mx-auto mt-6 h-[2px] bg-white/10 rounded-full overflow-hidden">
 
           <motion.div
-            key={active}
+            key={collectionIndex}
             initial={{ width: 0 }}
             animate={{ width: "100%" }}
             transition={{
-              duration: 5,
+              duration: 7,
               ease: "linear",
             }}
             className="h-full bg-white"
@@ -211,8 +190,19 @@ export default function CollectionHero() {
 
         </div>
 
-      </div>
+        {/* BUTTON */}
+        <div className="flex justify-center mt-10">
 
+          <Link
+            href="/shop"
+            className="bg-white text-black px-10 py-4 rounded-full uppercase tracking-[0.35em] text-[10px] hover:bg-zinc-200 transition duration-500"
+          >
+            Explore Collection
+          </Link>
+
+        </div>
+
+      </div>
     </section>
   );
 }
